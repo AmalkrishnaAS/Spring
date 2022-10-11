@@ -1,6 +1,9 @@
 package com.example.telusko.controller;
 
+import java.util.List;
+
 import org.hibernate.annotations.NotFound;
+import org.hibernate.query.criteria.internal.expression.function.LengthFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +59,8 @@ public ModelAndView  DeleteAlien(int aid) {
 	return mView;
 }
 
-@RequestMapping("UpdateAlien")
-public ModelAndView UpdateAlien(Alien alien) {
+@RequestMapping("updateAlien")
+public ModelAndView updateAlien(Alien alien) {
 	Message message=new Message();
 	Alien a=repo.findById(alien.getAid()).orElse(null);
 	if(a==null) {
@@ -77,6 +80,25 @@ public ModelAndView UpdateAlien(Alien alien) {
 	ModelAndView mView=new ModelAndView("Delete");
 	mView.addObject(message);
 	return mView;
+	
+}
+
+@RequestMapping("getTech")
+public ModelAndView getTech(String tech) {
+	ModelAndView mv=new ModelAndView("ShowList");
+	List<Alien> aliens=repo.findByTech(tech);
+	System.out.println(aliens);
+	System.out.println(repo.findByAidGreaterThan(101));
+	System.out.println(repo.findByTechSorted(tech));
+	if(aliens.isEmpty()) {
+		Message message=new Message();
+		message.setMsg("No Recrds found");
+		mv.addObject(message);
+		return mv;
+	}
+	mv.addObject(aliens);
+	
+	return mv;
 	
 }
 }

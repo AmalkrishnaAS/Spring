@@ -11,8 +11,9 @@
 Add
 </h2>
 <form action="addAlien">
-<input type="text" name="aname" /> <br>
-<input type="text" name="aid"><br>
+<input type="text" placeholder="Alien Name" name="aname" /> <br>
+<input type="text" placeholder="aid" name="aid"><br>
+<input type="text" placeholder="tech" name="tech"><br>
 
 <br>
 <input type="submit">
@@ -22,6 +23,7 @@ Add
 <h2>
 Find
 </h2>
+ 
 <form action="getAlien">
 <input type="text" name="aid"><br>
 
@@ -40,6 +42,29 @@ Delete
 <input type="submit">
 
 </form>
+<br>
+<br>
+<h2>
+Update
+</h2>
+<form action="updateAlien">
+<input type="text" placeholder="Alien Name" name="aname" /> <br>
+<input type="text" placeholder="aid" name="aid"><br>
+<input type="text" placeholder="tech" name="tech"><br>
 
+<br>
+<input type="submit">
+</form>
+<br>
+<br>
+
+<h2>
+find by Tech
+
+</h2>
+<form action="getTech">
+<input type="text" name="tech">
+<input type="submit">
+</form>
 </body>
 </html>
