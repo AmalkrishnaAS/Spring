@@ -9,7 +9,7 @@
 <body>
 
 <h1>
-Record Deleted !
+${message}
 </h1>
 
 </body>

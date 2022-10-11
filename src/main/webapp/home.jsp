@@ -29,6 +29,9 @@ Find
 <input type="submit">
 
 </form>
+<h2>
+Delete
+</h2>
 
 <form action="DeleteAlien">
 <input type="text" name="aid"><br>
