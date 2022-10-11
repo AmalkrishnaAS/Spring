@@ -1,12 +1,15 @@
 package com.example.telusko.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.query.criteria.internal.expression.function.LengthFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.telusko.dao.AlienRepo;
@@ -96,9 +99,20 @@ public ModelAndView getTech(String tech) {
 		mv.addObject(message);
 		return mv;
 	}
-	mv.addObject(aliens);
+	mv.addObject("listAlien",aliens.toString());
 	
 	return mv;
 	
+}
+@RequestMapping("/aliens")
+@ResponseBody
+public List<Alien> getAliens() {
+	return repo.findAll();
+}
+
+@RequestMapping("/alien/{aid}")
+@ResponseBody
+public Optional<Alien> getAlienById(@PathVariable("aid") int aid) {
+	return repo.findById(aid);
 }
 }
