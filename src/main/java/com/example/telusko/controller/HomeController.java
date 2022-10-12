@@ -7,9 +7,14 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.query.criteria.internal.expression.function.LengthFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.telusko.dao.AlienRepo;
@@ -17,7 +22,7 @@ import com.example.telusko.model.Alien;
 import com.example.telusko.model.Message;
 
 
-@Controller
+@RestController
 public class HomeController {
 	@Autowired
 	AlienRepo repo;
@@ -25,10 +30,11 @@ public class HomeController {
 public String homeString () {
 	return "home";
 }
-@RequestMapping("/addAlien")
-public String addAlien(Alien alien) {
+@PostMapping(path = "/alien",consumes= {"application/json"})
+public Alien addAlien(@RequestBody Alien alien) {
+	System.out.println(alien);
 	repo.save(alien);
-	return "home";
+	return alien;
 }
 @RequestMapping("/getAlien")
 public ModelAndView getAlien(int aid) {
@@ -41,13 +47,14 @@ public ModelAndView getAlien(int aid) {
 	mv.addObject("alien", alien);
 	return mv;
 }
-@RequestMapping("DeleteAlien")
-public ModelAndView  DeleteAlien(int aid) {
+@DeleteMapping("/alien/{aid}")
+public Message  DeleteAlien(@PathVariable Integer  aid) {
 	Message message=new Message();
 	Alien alien=repo.findById(aid).orElse(null);
 	if(alien==null) {
 		
 		message.setMsg("Not Found");
+		return message;
 		
 		
 	}
@@ -56,19 +63,21 @@ public ModelAndView  DeleteAlien(int aid) {
 		
 		
 		message.setMsg("Record Deleted");
+		return message;
 	}
-	ModelAndView mView=new ModelAndView("Delete");
-	mView.addObject(message);
-	return mView;
+//	ModelAndView mView=new ModelAndView("Delete");
+//	mView.addObject(message);
+//	return message;
 }
 
-@RequestMapping("updateAlien")
-public ModelAndView updateAlien(Alien alien) {
+@PutMapping("/alien")
+public Message updateAlien(@RequestBody Alien alien) {
 	Message message=new Message();
 	Alien a=repo.findById(alien.getAid()).orElse(null);
 	if(a==null) {
 		
 		message.setMsg("Not Found");
+		return message;
 		
 		
 	}
@@ -79,10 +88,11 @@ public ModelAndView updateAlien(Alien alien) {
 		
 		
 		message.setMsg("Record Updated");
+		return message;
 	}
-	ModelAndView mView=new ModelAndView("Delete");
-	mView.addObject(message);
-	return mView;
+//	ModelAndView mView=new ModelAndView("Delete");
+//	mView.addObject(message);
+//	return mView;
 	
 }
 
@@ -104,14 +114,14 @@ public ModelAndView getTech(String tech) {
 	return mv;
 	
 }
-@RequestMapping("/aliens")
-@ResponseBody
+@RequestMapping(path="/aliens",produces = {"application/json"})
+//@ResponseBody
 public List<Alien> getAliens() {
 	return repo.findAll();
 }
 
 @RequestMapping("/alien/{aid}")
-@ResponseBody
+//@ResponseBody
 public Optional<Alien> getAlienById(@PathVariable("aid") int aid) {
 	return repo.findById(aid);
 }

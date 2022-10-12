@@ -15,5 +15,10 @@ public class Message {
 	public String toString() {
 		return msg;
 	}
+
+//	public Message(String msg) {
+//		super();
+//		this.msg = msg;
+//	}
 	
 }
