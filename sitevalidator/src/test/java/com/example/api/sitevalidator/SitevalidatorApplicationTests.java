@@ -1,10 +1,10 @@
-package com.example.telusko;
+package com.example.api.sitevalidator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootJpaApplicationTests {
+class SitevalidatorApplicationTests {
 
 	@Test
 	void contextLoads() {
